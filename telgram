@@ -1,0 +1,14 @@
+import requests
+
+res=requests.get("https://api.telegram.org/bot7306923316:AAHkp_7IKcrHwhd7L7Db5VYxej1CPWt5K7A/getupdates")
+print(res.text)
+data=res.json()
+for results in data["result"]:
+    if "Rafi" in results["message"]["from"]["last_name"]:
+     print("yes")
+    else:
+     print("No")
+def resend():
+url=requests.get("https://api.telegram.org/7471241470:AAGTgyxlxmVt080Kz1MOLw14KTYaVyCRYY0/sendMessage")
+para={
+"chat
