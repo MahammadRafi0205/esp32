@@ -1,0 +1,17 @@
+import requests
+res=requests.get("https://api.telegram.org/bot7306923316:AAHkp_7IKcrHwhd7L7Db5VYxej1CPWt5K7A/getupdates")
+print(res.text)
+data=res.json()
+for results in data["result"]:
+    if "Rafi" in results["message"]["from"]["last_name"]:
+     print("yes")
+     resend()
+    else:
+     print("No")
+def resend():
+ para={
+"chat_id":967667070,
+"text":"hai"
+}
+ res=requests.get("https://api.telegram.org/bot7306923316:AAHkp_7IKcrHwhd7L7Db5VYxej1CPWt5K7A/sendMessage",data=para)
+print(res.text)
