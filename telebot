@@ -1,17 +1,28 @@
 import requests
-res=requests.get("https://api.telegram.org/bot7306923316:AAHkp_7IKcrHwhd7L7Db5VYxej1CPWt5K7A/getupdates")
-print(res.text)
-data=res.json()
-for results in data["result"]:
-    if "Rafi" in results["message"]["from"]["last_name"]:
-     print("yes")
-     resend()
-    else:
-     print("No")
-def resend():
- para={
-"chat_id":967667070,
-"text":"hai"
-}
- res=requests.get("https://api.telegram.org/bot7306923316:AAHkp_7IKcrHwhd7L7Db5VYxej1CPWt5K7A/sendMessage",data=para)
-print(res.text)
+from telegram import InlineKeyboardButton,InlineKeyboardMarkup
+url=("https://api.telegram.org/bot7306923316:AAHkp_7IKcrHwhd7L7Db5VYxej1CPWt5K7A")
+def update():
+  resp=requests.get(url+"/getupdates",)
+  data=resp.json()
+  print(resp.text)
+
+  for result in data["result"]:
+    print(result["message"]["from"]["last_name"],end=" ")
+    print(result["message"]["text"])
+    if "Hai" in result["message"]["text"]:
+      send()
+      print("yes")
+
+
+def send():
+  para={
+      "chat_id":967667070,
+      "text":"hello this is bot ",
+      "reply_markup":{"keybord":
+                      [[{"text":"Get_keywords"}],
+                       [{"text":"hello"}]],
+                      "resize_keyboard":True,
+                      "one_time_keyboard":True}
+  }
+  resp=requests.post(url+"/sendMessage",data=para)
+update()
