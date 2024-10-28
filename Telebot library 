@@ -1,0 +1,17 @@
+import telebot
+token="7306923316:AAHkp_7IKcrHwhd7L7Db5VYxej1CPWt5K7A"
+bot=telebot.TeleBot(token)
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    bot.reply_to(message, "Hello! How can I assist you?")
+    print(message.text)
+    print(message.from_user.first_name)
+    print(message.from_user.last_name)
+@bot.message_handler(commands=["help"])
+def send_message(message):
+    bot.reply_to(message,"Routine action \n/temperature-Gives weather temperature")
+@bot.message_handler(content_types=["text"])
+def temp(message):
+    bot.reply_to(message,"https://weather.com/en-GB/weather/tenday/l/e19ceb12af75f3834867345613a26e7e487d40686fc608abd366afae61d52453?par=oppo_widget&frontCode=2.0&infoEnable=true")
+
+bot.polling()
