@@ -1,4 +1,7 @@
+import requests 
 import telebot
+import time
+url="https://api.openweathermap.org/data/2.5/weather?q=Hyderabad&appid=e1a97c92c301fdc43f82c18d93b3010f"
 token="7306923316:AAHkp_7IKcrHwhd7L7Db5VYxej1CPWt5K7A"
 bot=telebot.TeleBot(token)
 @bot.message_handler(commands=['start'])
@@ -12,6 +15,12 @@ def send_message(message):
     bot.reply_to(message,"Routine action \n/temperature-Gives weather temperature")
 @bot.message_handler(content_types=["text"])
 def temp(message):
-    bot.reply_to(message,"https://weather.com/en-GB/weather/tenday/l/e19ceb12af75f3834867345613a26e7e487d40686fc608abd366afae61d52453?par=oppo_widget&frontCode=2.0&infoEnable=true")
+    resp=requests.get(url).json()
+    print(resp)
+    para={
+          "temperature":resp["main"]["temp"],
+       }
+    message_text = f"Temperature: {para['temperature']}°C"
+    bot.reply_to(message,message_text)
 
 bot.polling()
