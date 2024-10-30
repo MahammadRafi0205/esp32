@@ -1,0 +1,21 @@
+import os
+from pytube import YouTube
+
+# Initialize YouTube object
+yt = YouTube('https://youtu.be/nFgsBxw-zWQ?si=9t_qL3iHU0MBwZ8f')
+
+# Download video-only stream (1080p)
+video_stream = yt.streams.get_by_itag(137)
+video_path = video_stream.download(filename='video_only.mp4')
+
+# Download audio-only stream (128kbps)
+audio_stream = yt.streams.get_by_itag(140)
+audio_path = audio_stream.download(filename='audio_only.mp4')
+
+# Combine video and audio using FFmpeg
+output_path = 'final_video.mp4'
+os.system(f'ffmpeg -i {video_path} -i {audio_path} -c:v copy -c:a aac {output_path}')
+
+# Clean up temporary files
+os.remove(video_path)
+os.remove(audio_path)
