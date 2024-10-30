@@ -1,0 +1,10 @@
+from pytube import YouTube
+YouTube('https://youtu.be/0iAUbvsl6UQ?si=T98vHg4bJ-oUYVwe').streams.first().download()
+yt = YouTube('https://youtu.be/0iAUbvsl6UQ?si=T98vHg4bJ-oUYVwe')
+yt.streams
+#print(yt)
+#yt.filter(progressive=True, file_extension='mp4')
+#yt.order_by('resolution')
+#yt.desc()
+#yt.first()
+#yt.download()
