@@ -1,0 +1,10 @@
+from pytube import YouTube
+
+# Initialize the YouTube object
+yt = YouTube('https://youtu.be/0iAUbvsl6UQ?si=T98vHg4bJ-oUYVwe')
+
+# Download the highest quality video stream that includes audio (progressive=True)
+yt.streams.get_by_itag(18).download()
+
+# OR download the video-only high resolution (1080p) stream if you want video-only
+yt.streams.get_by_itag(137).download()
