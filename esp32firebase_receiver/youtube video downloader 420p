@@ -1,0 +1,42 @@
+import requests
+import telebot
+import os
+from pytube import YouTube
+
+# Set up the OpenWeatherMap API and Telegram bot token
+weather_url = "https://api.openweathermap.org/data/2.5/weather?q=Hyderabad&appid=e1a97c92c301fdc43f82c18d93b3010f"
+token = "7306923316:AAHkp_7IKcrHwhd7L7Db5VYxej1CPWt5K7A"
+bot = telebot.TeleBot(token)
+
+# YouTube command for video download
+@bot.message_handler(commands=['youtube'],chat_types=['group', 'supergroup'])
+def request_youtube_link(message):
+    msg = bot.reply_to(message, "Please enter the YouTube link:")
+    bot.register_next_step_handler(msg, download_youtube_video)
+
+def download_youtube_video(message):
+    try:
+        url = message.text
+        if "youtu.be" in url or "youtube.com" in url:
+            yt = YouTube(url)
+            
+            # Download a smaller video stream
+            video_stream = yt.streams.get_by_itag(18)  # 360p video + audio
+            
+            output_path = video_stream.download(filename='video.mp4')
+
+            # Check if the file size exceeds Telegram’s limit
+            if os.path.getsize(output_path) > 50 * 1024 * 1024:
+                bot.reply_to(message, "The video file is too large to send on Telegram (50 MB limit). Try a shorter video link or a lower resolution.")
+                os.remove(output_path)
+            else:
+                with open(output_path, 'rb') as video_file:
+                    bot.send_document(message.chat.id, video_file)
+                os.remove(output_path)
+        else:
+            bot.reply_to(message, "Please provide a valid YouTube link.")
+    except Exception as e:
+        bot.reply_to(message, f"An error occurred: {str(e)}")
+
+# Start polling
+bot.polling()
