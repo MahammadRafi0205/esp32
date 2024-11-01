@@ -1,0 +1,73 @@
+import requests
+import telebot
+import os
+from pytube import YouTube
+
+# Set up the OpenWeatherMap API and Telegram bot token
+weather_url = "https://api.openweathermap.org/data/2.5/weather?q=Hyderabad&appid=e1a97c92c301fdc43f82c18d93b3010f"
+token = "7306923316:AAHkp_7IKcrHwhd7L7Db5VYxej1CPWt5K7A"
+bot = telebot.TeleBot(token)
+
+# Start command
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    bot.reply_to(message, "Hello! How can I assist you?")
+    print(message.text)
+    print(message.from_user.first_name, message.from_user.last_name)
+
+# Help command
+@bot.message_handler(commands=["help"])
+def send_help(message):
+    bot.reply_to(message, "Routine actions:\n/weather - Gives weather report\n/youtube - Downloads YouTube video")
+
+# Weather command
+@bot.message_handler(commands=["weather"])
+def temp(message):
+    resp = requests.get(weather_url).json()
+    para = {
+        "temperature": resp["main"]["temp"] - 273.15,
+        "feels_like": resp["main"]["feels_like"] - 273.15,
+        "city": resp["name"],
+        "humidity": resp["main"]["humidity"]
+    }
+    message_text = f"Temperature: {para['temperature']:.2f}°C\nFeels Like: {para['feels_like']:.2f}°C\nHumidity: {para['humidity']}%\nCity: {para['city']}"
+    bot.reply_to(message, message_text)
+
+# YouTube command for video download
+@bot.message_handler(commands=['youtube'])
+def request_youtube_link(message):
+    msg = bot.reply_to(message, "Please enter the YouTube link:")
+    bot.register_next_step_handler(msg, download_youtube_video)
+
+def download_youtube_video(message):
+    try:
+        url = message.text
+        if "youtu.be" in url or "youtube.com" in url:
+            yt = YouTube(url)
+            
+            # Download video and audio streams
+            video_stream = yt.streams.get_by_itag(137)  # 1080p video only
+            audio_stream = yt.streams.get_by_itag(140)  # audio only
+            
+            video_path = video_stream.download(filename='video_only.mp4')
+            audio_path = audio_stream.download(filename='audio_only.mp4')
+
+            # Merge video and audio using ffmpeg
+            output_path = 'final_video.mp4'
+            os.system(f'ffmpeg -i {video_path} -i {audio_path} -c:v copy -c:a aac {output_path} -y')
+            
+            # Remove temporary files
+            os.remove(video_path)
+            os.remove(audio_path)
+            
+            # Send video file to the user
+            with open(output_path, 'rb') as video_file:
+                bot.send_document(message.chat.id, video_file)
+            os.remove(output_path)
+        else:
+            bot.reply_to(message, "Please provide a valid YouTube link.")
+    except Exception as e:
+        bot.reply_to(message, f"An error occurred: {str(e)}")
+
+# Start polling
+bot.polling()
