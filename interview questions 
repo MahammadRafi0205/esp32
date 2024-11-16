@@ -1,0 +1,84 @@
+Basic Questions
+Reverse a String
+
+Write a program to reverse a given string without using built-in functions.
+Example: Input: hello → Output: olleh
+Check for Palindrome
+
+Determine if a given string or number is a palindrome.
+Example: Input: 121 → Output: True
+Find the Largest Number in an Array
+
+Example: Input: [1, 5, 3, 9, 2] → Output: 9
+FizzBuzz Problem
+
+Print numbers from 1 to 100. For multiples of 3, print "Fizz," for multiples of 5, print "Buzz," and for multiples of both, print "FizzBuzz."
+Sum of Digits
+
+Write a program to find the sum of digits of a number.
+Example: Input: 123 → Output: 6
+Intermediate Questions
+Find Second Largest Element in an Array
+
+Example: Input: [10, 20, 4, 45, 99] → Output: 45
+Count the Number of Vowels in a String
+
+Example: Input: hello world → Output: 3
+Merge Two Sorted Arrays
+
+Example: Input: [1, 3, 5] and [2, 4, 6] → Output: [1, 2, 3, 4, 5, 6]
+Factorial of a Number
+
+Calculate the factorial of a given number using loops.
+Example: Input: 5 → Output: 120
+Check for Prime Number
+
+Example: Input: 29 → Output: True
+Advanced Questions
+Two Sum Problem
+
+Find two numbers in an array that sum to a target value.
+Example: Input: nums = [2, 7, 11, 15], target = 9 → Output: [0, 1] (indexes)
+Find the Missing Number in an Array
+
+Example: Input: [1, 2, 4, 5] (Missing: 3) → Output: 3
+Find Duplicates in an Array
+
+Example: Input: [1, 2, 3, 1, 2, 4] → Output: [1, 2]
+Longest Substring Without Repeating Characters
+
+Example: Input: "abcabcbb" → Output: 3 (substring: abc)
+Binary Search
+
+Implement binary search to find an element in a sorted array.
+Example: Input: arr = [1, 3, 5, 7, 9], target = 7 → Output: 3 (index)
+Data Structures and Algorithms
+Find the Middle Element of a Linked List
+
+Without using extra space.
+Sort an Array (Bubble Sort)
+
+Implement bubble sort and explain its complexity.
+Check if a String is Anagram
+
+Example: Input: listen and silent → Output: True
+Find Intersection of Two Arrays
+
+Example: Input: [1, 2, 2, 3] and [2, 3, 4] → Output: [2, 3]
+Find the First Non-Repeating Character in a String
+
+Example: Input: aabbccddeef → Output: f
+Mock Question (Accenture Specific)
+Write a program to print the Fibonacci series up to n terms.
+
+Example: Input: n = 5 → Output: 0, 1, 1, 2, 3
+Check if an Array is Sorted
+
+Example: Input: [1, 2, 3, 4, 5] → Output: True
+Implement Matrix Multiplication
+
+Multiply two matrices and display the result.
+Practice Platforms
+HackerRank: Start with "Warm-Up Challenges."
+LeetCode: Focus on easy and medium problems.
+GeeksforGeeks: Great for DSA practice.
